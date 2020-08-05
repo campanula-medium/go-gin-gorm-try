@@ -1,0 +1,10 @@
+.classpath
+.project
+.settings
+.DS_Store
+.idea
+/target/
+/download/
+*.zip
+*download*
+go.sum
