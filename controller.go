@@ -10,6 +10,9 @@ type ControllerConfig struct {
 
 func InitController(config ControllerConfig) {
 	engine := gin.Default()
+	engine.GET("/health", func(context *gin.Context) {
+		context.Status(200)
+	})
 	router(engine)
 	engine.Run(":" + config.Host)
 }
