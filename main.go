@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"github.com/spf13/viper"
 	"log"
 
 	consulapi "github.com/hashicorp/consul/api"
@@ -8,9 +10,16 @@ import (
 
 func main() {
 
-	InitDao(DaoConfig{Args: "root:root@(127.0.0.1:3306)/test?charset=utf8&parseTime=True&loc=Local"})
-	RegService()
-	InitController(ControllerConfig{Host: "8888"})
+	v := viper.New()
+	v.SetConfigFile("config.yml")
+	err := v.ReadInConfig()
+	if err != nil {
+		panic(fmt.Errorf("Fatal error config file: %s \n", err))
+	}
+
+	InitDao(DaoConfig{Args: v.Get("db.dsn").(string)})
+	//RegService()
+	InitController(ControllerConfig{Host: v.Get("server.port").(string)})
 }
 
 func RegService() {
