@@ -17,9 +17,9 @@ func main() {
 		panic(fmt.Errorf("Fatal error config file: %s \n", err))
 	}
 
-	InitDao(DaoConfig{Args: v.Get("db.dsn").(string)})
+	InitDao(DaoConfig{Args: v.GetString("db.dsn")})
 	//RegService()
-	InitController(ControllerConfig{Host: v.Get("server.port").(string)})
+	InitController(ControllerConfig{Host: v.GetString("server.port")})
 }
 
 func RegService() {
