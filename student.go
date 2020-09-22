@@ -29,8 +29,8 @@ func UpdateStudent(c *gin.Context) {
 	id := c.Param("id")
 	var student student
 	c.BindJSON(&student)
-	idInt, _ := strconv.ParseInt(id, 10, 64)
-	getDao().Model(&student).Where(" id = ? ", idInt).Update(&student)
+	student.Id, _ = strconv.ParseInt(id, 10, 64)
+	getDao().Save(&student)
 	c.Status(http.StatusOK)
 }
 

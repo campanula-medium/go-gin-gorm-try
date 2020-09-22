@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 var (
@@ -14,7 +14,7 @@ type DaoConfig struct {
 }
 
 func InitDao(config DaoConfig) {
-	db, _ = gorm.Open("mysql", config.Args)
+	db, _ = gorm.Open(mysql.Open(config.Args), nil)
 }
 
 func getDao() *gorm.DB {
