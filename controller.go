@@ -8,13 +8,13 @@ type ControllerConfig struct {
 	Host string
 }
 
-func InitController(config ControllerConfig) {
+func InitController(config Service, consul Consul) {
 	engine := gin.Default()
-	engine.GET("/health", func(context *gin.Context) {
+	engine.GET(consul.CheckUrl, func(context *gin.Context) {
 		context.Status(200)
 	})
 	router(engine)
-	engine.Run(":" + config.Host)
+	engine.Run(":" + config.Port)
 }
 
 func router(engine *gin.Engine) {

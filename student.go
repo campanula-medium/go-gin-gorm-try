@@ -21,7 +21,7 @@ func (s student) TableName() string {
 func AddStudent(c *gin.Context) {
 	var student student
 	c.BindJSON(&student)
-	getDao().Create(&student)
+	Add(&student)
 	c.Status(http.StatusOK)
 }
 
@@ -30,19 +30,19 @@ func UpdateStudent(c *gin.Context) {
 	var student student
 	c.BindJSON(&student)
 	student.Id, _ = strconv.ParseInt(id, 10, 64)
-	getDao().Save(&student)
+	Update(&student)
 	c.Status(http.StatusOK)
 }
 
 func DeleteStudent(c *gin.Context) {
 	id := c.Param("id")
 	idInt, _ := strconv.ParseInt(id, 10, 64)
-	getDao().Where(" id = ? ", idInt).Delete(&student{})
+	DelById(idInt)
 	c.Status(http.StatusOK)
 }
 
 func GetStudent(c *gin.Context) {
 	students := []student{}
-	getDao().Find(&students)
+	List(&students)
 	c.JSON(http.StatusOK, students)
 }
